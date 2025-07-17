@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="Master your subjects with interactive flashcards using FlipLearner">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="FlipLearner">
+    
+    <title>FlipLearner - Flashcard App</title>
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iMzIiIHZpZXdCb3g9IjAgMCAzMiAzMiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjMyIiBoZWlnaHQ9IjMyIiByeD0iNCIgZmlsbD0idXJsKCNncmFkaWVudDBfbGluZWFyXzFfMSkiLz4KPHA0aCBkPSJNOCAxMEgxNlYxNkg4VjEwWiIgZmlsbD0id2hpdGUiLz4KPHA0aCBkPSJNMTggMTBIMjZWMTZIMThWMTBaIiBmaWxsPSJ3aGl0ZSIgZmlsbC1vcGFjaXR5PSIwLjgiLz4KPHA0aCBkPSJNOCAxOEgxNlYyNEg4VjE4WiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC44Ii8+CjxwYXRoIGQ9Ik0xOCAxOEgyNlYyNEgxOFYxOFoiIGZpbGw9IndoaXRlIi8+CjxkZWZzPgo8bGluZWFyR3JhZGllbnQgaWQ9ImdyYWRpZW50MF9saW5lYXJfMV8xIiB4MT0iMCIgeTE9IjAiIHgyPSIzMiIgeTI9IjMyIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+CjxzdG9wIHN0b3AtY29sb3I9IiM2NjdFRUEiLz4KPHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSIjNzY0QkEyIi8+CjwvbGluZWFyR3JhZGllbnQ+CjwvZGVmcz4KPC9zdmc+"">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-graduation-cap"></i>
+                <span>FlipLearner</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link active" data-section="home">
+                        <i class="fas fa-home"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#study" class="nav-link" data-section="study">
+                        <i class="fas fa-book-open"></i>
+                        <span>Study</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#progress" class="nav-link" data-section="progress">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Progress</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <div class="container">
+                <div class="welcome-banner">
+                    <h1>Welcome to FlipLearner</h1>
+                    <p>Master your subjects with interactive flashcards</p>
+                </div>
+                
+                <div class="deck-management">
+                    <div class="deck-header">
+                        <h2>Your Decks</h2>
+                        <button class="btn btn-primary" id="createDeckBtn">
+                            <i class="fas fa-plus"></i> Create New Deck
+                        </button>
+                    </div>
+                    
+                    <div class="deck-grid" id="deckGrid">
+                        <!-- Decks will be dynamically loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Study Section -->
+        <section id="study" class="section">
+            <div class="container">
+                <div class="study-header">
+                    <button class="btn btn-secondary" id="backToDecks">
+                        <i class="fas fa-arrow-left"></i> Back to Decks
+                    </button>
+                    <h2 id="currentDeckName">Select a Deck</h2>
+                    <div class="study-controls">
+                        <button class="btn btn-outline" id="shuffleBtn">
+                            <i class="fas fa-random"></i> Shuffle
+                        </button>
+                        <button class="btn btn-outline" id="resetProgressBtn">
+                            <i class="fas fa-redo"></i> Reset
+                        </button>
+                    </div>
+                </div>
+
+                <div class="study-area" id="studyArea">
+                    <div class="deck-selection">
+                        <h3>Choose a deck to start studying</h3>
+                        <div class="deck-list" id="studyDeckList">
+                            <!-- Available decks for study -->
+                        </div>
+                    </div>
+
+                    <div class="flashcard-container" id="flashcardContainer" style="display: none;">
+                        <div class="card-counter">
+                            <span id="cardCounter">1 / 10</span>
+                        </div>
+                        
+                        <div class="flashcard" id="flashcard">
+                            <div class="card-inner">
+                                <div class="card-front">
+                                    <div class="card-content" id="questionContent">
+                                        Click on a deck to start studying
+                                    </div>
+                                </div>
+                                <div class="card-back">
+                                    <div class="card-content" id="answerContent">
+                                        Answer will appear here
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-controls">
+                            <button class="btn btn-success" id="correctBtn">
+                                <i class="fas fa-check"></i> Correct
+                            </button>
+                            <button class="btn btn-warning" id="againBtn">
+                                <i class="fas fa-redo"></i> Again
+                            </button>
+                            <button class="btn btn-danger" id="wrongBtn">
+                                <i class="fas fa-times"></i> Wrong
+                            </button>
+                        </div>
+
+                        <div class="navigation-controls">
+                            <button class="btn btn-outline" id="prevBtn">
+                                <i class="fas fa-chevron-left"></i> Previous
+                            </button>
+                            <button class="btn btn-outline" id="nextBtn">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Progress Section -->
+        <section id="progress" class="section">
+            <div class="container">
+                <h2>Your Progress</h2>
+                
+                <div class="progress-overview">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-layer-group"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalDecks">0</h3>
+                            <p>Total Decks</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-clone"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="totalCards">0</h3>
+                            <p>Total Cards</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="studyStreak">0</h3>
+                            <p>Study Streak</p>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="averageScore">0%</h3>
+                            <p>Average Score</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-details">
+                    <h3>Deck Progress</h3>
+                    <div class="deck-progress-list" id="deckProgressList">
+                        <!-- Deck progress items will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div class="modal" id="createDeckModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Create New Deck</h3>
+                <span class="close" id="closeDeckModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="createDeckForm">
+                    <div class="form-group">
+                        <label for="deckName">Deck Name</label>
+                        <input type="text" id="deckName" required placeholder="Enter deck name">
+                    </div>
+                    <div class="form-group">
+                        <label for="deckDescription">Description (Optional)</label>
+                        <textarea id="deckDescription" placeholder="Brief description of the deck"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelDeckBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create Deck</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addCardModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Card</h3>
+                <span class="close" id="closeCardModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <form id="addCardForm">
+                    <div class="form-group">
+                        <label for="cardQuestion">Question</label>
+                        <textarea id="cardQuestion" required placeholder="Enter the question"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="cardAnswer">Answer</label>
+                        <textarea id="cardAnswer" required placeholder="Enter the answer"></textarea>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" id="cancelCardBtn">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Add Card</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="editDeckModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Edit Deck</h3>
+                <span class="close" id="closeEditDeckModal">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="deck-info">
+                    <h4 id="editDeckName">Deck Name</h4>
+                    <p id="editDeckDescription">Deck Description</p>
+                </div>
+                <div class="cards-list">
+                    <div class="cards-header">
+                        <h4>Cards in this deck</h4>
+                        <button class="btn btn-primary" id="addCardBtn">
+                            <i class="fas fa-plus"></i> Add Card
+                        </button>
+                    </div>
+                    <div class="cards-container" id="cardsContainer">
+                        <!-- Cards will be loaded here -->
+                    </div>
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn btn-danger" id="deleteDeckBtn">Delete Deck</button>
+                    <button type="button" class="btn btn-secondary" id="closeEditBtn">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
